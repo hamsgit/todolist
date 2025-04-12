@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>To Do</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url("lavender.jpg");
+            color: #333;
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto; /* horizontally center */
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            color: #4b0280;
+            text-align: center;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+        }
+
+        button {
+            background-color: #270b26;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #f91d5f;
+        }
+
+        input[type="text"] {
+            padding: 8px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        .input-box {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <img src="pen todo.jpg" alt="To Do Banner" width="20%" height="100%" style="border-radius: 10px; margin-bottom: 20px;">
+    <div class="container">
+        <img src="bg.jpg" alt="To Do Banner" width="70%" height="100%" style="display: block; margin-left: auto; margin-right: auto;">
+        <h2>To Do List</h2>
+        <ul id="todo"></ul>
+
+        <div class="input-box">
+            <input id="Task" type="text">
+            <button id="submit"> Add Task</button>
+        </div>
+
+        <h2>Completed</h2>
+        <ul id="done"></ul>
+    </div>
+
+    <script>
+        let Submit = document.getElementById('submit');
+        let addTask = document.getElementById('Task');
+        let todoList = document.getElementById('todo');
+        let doneList = document.getElementById('done');
+        let list = new Array();
+
+        Submit.addEventListener('click', (event) => {
+            if (addTask.value != '') {
+                list.push(addTask.value);
+                todoList.innerHTML += '<li id="' + (list.length - 1) + '"><button onclick="complete(' + (list.length - 1) + ')">' + addTask.value + '</button></li>';
+                addTask.value = '';
+            }
+        });
+
+        function complete(id) {
+            doneList.innerHTML += '<li>' + list[id] + '</li>';
+            document.getElementById(id).style.display = "none";
+        }
+    </script>
+</body>
+</html>
