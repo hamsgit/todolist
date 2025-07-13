@@ -93,6 +93,22 @@ app.put('/todo/:id',async(req,res)=>{    //put is the route for update a data
    }
 }) 
 
+//Delete a todo item.
+app.delete('/todo/:id',async(req,res)=>
+{
+    try{
+         const ID = req.params.id;
+        await todomodel.findByIdAndDelete(ID);
+        res.sendStatus(204).end();
+    }
+    catch(error){
+        console.log(error);
+        res.status(500).json({message: message.error});
+    }
+   
+}) //the id in put or delete is the id of task the changes needed to be done in the database, 
+// this id will be given to the url when creating an api for that operation
+
 //start the server
 const port = 3000; //select the port in which the app should run.
 app.listen(port, ()=>{
