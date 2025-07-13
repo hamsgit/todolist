@@ -8,9 +8,8 @@ app.use(express.json());//express middleware to instruct to derive data from jso
 
 
 
-//create a variable to sample in menory storage for todo items
+//create a variable to sample in memory storage for todo items
 //let todo =[]; commented as mongoose
-
 
 //connecting mongoDB
 mongoose.connect('mongodb://localhost:27017/mern-todo')//the mern-todo is db name here
@@ -61,9 +60,38 @@ app.post('/todo',async(req,res)=>
 });
 
 //get all todo tasks
-app.get('/todo',(req,res) => { //get will take the data while post will save data.
+app.get('/todo',async(req,res) => { //get will take the data while post will save data.
+    try{
+        todomodel.find();
+    }
+    catch{
+
+    }
     res.json(todo);
 });
+
+//update a todo task
+app.put('/todo/:id',async(req,res)=>{    //put is the route for update a data
+   try{
+    const{title,description}= req.body;
+    const ID= req.params.id;
+    const updatedtodo = await todomodel.findByIdAndUpdate(
+        ID,
+        {title,description}
+    )
+    if (!updatedtodo)
+    {
+        return res.status(404).json({message: "Todo not found"})
+    }
+    res.json(updatedtodo)
+
+   } 
+   catch(error)
+   {
+        console.log(error);
+        res.status(500).json({message: message.error});
+   }
+}) 
 
 //start the server
 const port = 3000; //select the port in which the app should run.
